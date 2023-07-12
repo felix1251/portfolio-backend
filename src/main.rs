@@ -15,9 +15,9 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .service(index)
-            .wrap(Logger::default())
+            .wrap(Logger::new("%a %r status: %s %Dms"))
     })
-    .bind(("127.0.0.1", 9090))?
+    .bind(("127.0.0.1", 9000))?
     .run()
     .await
 }
