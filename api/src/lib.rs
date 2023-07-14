@@ -1,20 +1,22 @@
-use actix_json_response::JsonResponse;
-use actix_web::{get, http::StatusCode, middleware::Logger, App, HttpServer, Result};
+use actix_web::{get, middleware::Logger, App, HttpResponse, HttpServer, Result};
 use env_logger::Env;
 use serde::Serialize;
 
 #[derive(Serialize)]
 struct Welcome {
-    msg: String,
+    mesage: String,
 }
 
 //home path and serves as health checker
 #[get("/")]
-async fn index() -> Result<JsonResponse<Welcome>> {
+async fn welcome() -> Result<HttpResponse> {
     let welcome_obj = Welcome {
-        msg: "Welcome to my portfolio API".to_string(),
+        mesage: "welcome to my portfolio API".to_string(),
     };
-    Ok(JsonResponse::from(welcome_obj).with_status_code(StatusCode::OK))
+
+    Ok(HttpResponse::Ok()
+        .content_type("application/json")
+        .json(welcome_obj))
 }
 
 //main actix web server to run
@@ -24,7 +26,7 @@ pub async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .service(index)
+            .service(welcome)
             .wrap(Logger::new("%a %r status: %s %Dms"))
     })
     .bind(("127.0.0.1", 9000))?
