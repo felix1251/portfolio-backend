@@ -1,5 +1,5 @@
-use actix_web::{get, App, HttpServer};
 use actix_web::middleware::Logger;
+use actix_web::{get, App, HttpServer};
 use env_logger::Env;
 
 //home path and serves as health checker
