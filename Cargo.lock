@@ -15,6 +15,7 @@ dependencies = [
  "actix-web",
  "entity",
  "env_logger",
+ "migration",
  "serde",
 ]
 
